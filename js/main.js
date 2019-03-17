@@ -101,6 +101,7 @@
         game.classList.add("started");
     }
     function resetGame() {
+        clearInterval(timer);
         gameBoard = [];
         clearBoard(listOfClickedElements);
         counter = 0;
