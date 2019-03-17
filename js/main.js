@@ -1,20 +1,54 @@
 (function() {
-    let data = [
-        {id: 1, url: "https://hdqwalls.com/download/resident-evil-the-final-chapter-2016-movie-qu-1024x1024.jpg"},
-        {id: 2, url: "http://2.bp.blogspot.com/-vwFdmqzcJOo/UDj4kJs3iSI/AAAAAAAAOuI/b2cStfrcPM0/s1600/Resident_Evil_Retribution_ipad_Wallpaper.jpg"},
-        {id: 3, url: "https://i.pinimg.com/originals/50/81/ad/5081add37a1eeda485fbed6594d156ad.jpg"},
-        {id: 4, url: "https://mfiles.alphacoders.com/632/632598.jpg"},
-        {id: 5, url: "https://stmed.net/sites/default/files/styles/1024x1024/public/resident-evil%3A-the-final-chapter-wallpapers-29844-2786622.jpg?itok=xfd86b7E"},
-        {id: 6, url: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRamnZlBY0-NfQucueVQ8LC9zI-fQHBMWLJ078BRgdEcgCnViBk"},
-        {id: 7, url: "https://avatarfiles.alphacoders.com/784/78481.png"},
-        {id: 8, url: "https://wallpapershome.com/images/wallpapers/resident-evil-the-final-chapter-1024x1024-milla-jovovich-guns-best-11775.jpg"}
-    ];
+    let testMode = 0;
+
     //DOM and globals
     let counter = 0;
     // let listOfClickedElements = [];​
     let listOfClickedElements = [];
     let scenes = document.querySelectorAll(".scene");
     let cardsContent = document.querySelectorAll(".scene .back");
+    let gameBoard = [];
+
+    data = [
+        { id: 1, url: "https://loremflickr.com/400/400?random=1" },
+        { id: 2, url: "https://loremflickr.com/400/400?random=2" },
+        { id: 3, url: "https://loremflickr.com/400/400?random=3" },
+        { id: 4, url: "https://loremflickr.com/400/400?random=4" },
+        { id: 5, url: "https://loremflickr.com/400/400?random=5" },
+        { id: 6, url: "https://loremflickr.com/400/400?random=6" },
+        { id: 7, url: "https://loremflickr.com/400/400?random=7" },
+        { id: 8, url: "https://loremflickr.com/400/400?random=8" }
+    ];
+    if(testMode) {
+        initGame(data);
+    } else {
+        fetch("https://api.unsplash.com/photos/random/?count=8&client_id=f16727b40ea8cfd006cb99dc10807560afb25554a379c01fe4e28e698ecff2b6")
+          .then(function(response) {
+              if(response.status !== 200) {
+                  testMode = 1;
+                  return data;
+              } else
+                return response.json();
+           })  
+          .then(function(data) {
+              initGame(data);
+          });
+    }
+    
+    function initGame(data) {
+        
+        //Initilize
+        data.forEach(el => {
+            gameBoard.push(el);
+            gameBoard.push(el);
+        });
+        gameBoard = shuffle(gameBoard);
+        cardsContent.forEach((el, index) => {
+            if (testMode) el.style.backgroundImage = "url(" + gameBoard[index].url + ")";
+            else el.style.backgroundImage = "url(" + gameBoard[index].urls.small + ")";
+        });
+        startGame();
+    }
     
     //events
     scenes.forEach(el => {
@@ -35,27 +69,22 @@
         });
     });
 
-    //Initilize
-    let gameBoard = [];
-
-    data.forEach(el => {
-        gameBoard.push(el);
-        gameBoard.push(el);
-    });
-    gameBoard = shuffle(gameBoard);
-    cardsContent.forEach((el, index) => {
-        el.style.backgroundImage = "url(" + gameBoard[index].url + ")";
-    });
-
 
     //functions
+    function startGame() {
+        let game = document.getElementById("gameGrid");
+        game.classList.add("started");
+    }
+
     function checkPair(list) {
         return list[0].querySelector(".back").style.backgroundImage === list[1].querySelector(".back").style.backgroundImage;
     }
+
     function openCard(el) {
         el.classList.add("clicked");
         listOfClickedElements.push(el);
     }
+
     function clearBoard(list) {
         list.forEach(el => {
             el.classList.remove("clicked");
