@@ -64,18 +64,18 @@ h1 {
   grid-template-columns: 60% 40%;
   grid-template-rows: 20% 50% 30%;
   &.started {
-    .game, .score, .menu {
+    .game, .menu, .score {
       opacity: 1;
       visibility: visible;
     }
     .game {
       animation: bounceIn 1.4s ease-in;
     }
-    .score {
+    .menu {
       animation: bounceIn 1.4s ease-in 0.6s;
       transition-delay: 0.6s;
     }
-    .menu {
+    .score {
       animation: bounceIn 1.4s ease-in 0.3s;
       transition-delay: 0.3s;
     }
@@ -86,8 +86,8 @@ header {
   grid-column: 1/3;
 }
 .game,
-.score,
-.menu {
+.menu,
+.score {
   opacity: 0;
   visibility: hidden;
 }
@@ -101,18 +101,53 @@ header {
   border-radius: 8px;
 }
 
-.menu {
+.score {
   grid-row: 2/3;
   grid-column: 2/3;
   background: rgb(87, 180, 99);
   border-radius: 8px;
 }
 
-.score {
+.menu {
   grid-row: 3/4;
   grid-column: 2/3;
-  background: rgb(168, 71, 71);
+  background: #2a9dc1;
   border-radius: 8px;
+}
+.button {
+  border: 1px solid #146580;
+  padding: 0px 65px;
+  margin: 3% 3% 1.5% 3%;
+  height: 83%;
+  width: 94%;
+  &-container {
+    height: 50%;
+  }
+  color: #fff;
+  font-family: "Pacifico";
+  font-size: 30px;
+  background: #38b4dc;
+  border-radius: 8px;
+  transition: all 0.3s ease-in-out;
+  position: relative;
+  &.git {
+    text-align: right;
+    margin-top: 1.5%;
+    margin-bottom: 3%;
+  }
+  svg {
+    left: 45px;
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+  }
+  &:hover {
+    cursor: pointer;
+    background: #42cdfc;
+  }
+  &:hover, &:focus {
+    outline: none;
+  }
 }
 
 .scene-container {
@@ -182,7 +217,7 @@ header {
 @keyframes bounceIn {
   0% {
     opacity: 0;
-    transform: scale(0.3) translate3d(0, 0, 0);
+    transform: scale(0.6) translate3d(0, 0, 0);
   }
 
   50% {

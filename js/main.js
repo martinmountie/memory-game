@@ -3,36 +3,41 @@
 
     //DOM and globals
     let counter = 0;
-    // let listOfClickedElements = [];​
     let listOfClickedElements = [];
     let scenes = document.querySelectorAll(".scene");
     let cardsContent = document.querySelectorAll(".scene .back");
     let gameBoard = [];
+    let resetButton = document.getElementById("resetButton");
+    resetButton.addEventListener("click", resetGame);
 
-    data = [
-        { id: 1, url: "https://loremflickr.com/400/400?random=1" },
-        { id: 2, url: "https://loremflickr.com/400/400?random=2" },
-        { id: 3, url: "https://loremflickr.com/400/400?random=3" },
-        { id: 4, url: "https://loremflickr.com/400/400?random=4" },
-        { id: 5, url: "https://loremflickr.com/400/400?random=5" },
-        { id: 6, url: "https://loremflickr.com/400/400?random=6" },
-        { id: 7, url: "https://loremflickr.com/400/400?random=7" },
-        { id: 8, url: "https://loremflickr.com/400/400?random=8" }
-    ];
-    if(testMode) {
-        initGame(data);
-    } else {
-        fetch("https://api.unsplash.com/photos/random/?count=8&client_id=f16727b40ea8cfd006cb99dc10807560afb25554a379c01fe4e28e698ecff2b6")
-          .then(function(response) {
-              if(response.status !== 200) {
-                  testMode = 1;
-                  return data;
-              } else
-                return response.json();
-           })  
-          .then(function(data) {
-              initGame(data);
-          });
+    getData();
+    
+    function getData() {
+        data = [
+            { id: 1, url: "https://loremflickr.com/400/400?random=1" },
+            { id: 2, url: "https://loremflickr.com/400/400?random=2" },
+            { id: 3, url: "https://loremflickr.com/400/400?random=3" },
+            { id: 4, url: "https://loremflickr.com/400/400?random=4" },
+            { id: 5, url: "https://loremflickr.com/400/400?random=5" },
+            { id: 6, url: "https://loremflickr.com/400/400?random=6" },
+            { id: 7, url: "https://loremflickr.com/400/400?random=7" },
+            { id: 8, url: "https://loremflickr.com/400/400?random=8" }
+        ];
+         if (testMode) {
+             initGame(data);
+         } else {
+             fetch("https://api.unsplash.com/photos/random/?count=8&client_id=f16727b40ea8cfd006cb99dc10807560afb25554a379c01fe4e28e698ecff2b6")
+                 .then(function (response) {
+                     if (response.status !== 200) {
+                         testMode = 1;
+                         return data;
+                     } else
+                         return response.json();
+                 })
+                 .then(function (data) {
+                     initGame(data);
+                 });
+         }
     }
     
     function initGame(data) {
@@ -74,6 +79,22 @@
     function startGame() {
         let game = document.getElementById("gameGrid");
         game.classList.add("started");
+    }
+    function resetGame() {
+        gameBoard = [];
+        clearBoard(listOfClickedElements);
+        counter = 0;
+        listOfClickedElements = [];
+        unhideAll();
+        setTimeout(function() {
+            getData();
+        }, 500);
+    }
+    function unhideAll() {
+        let hiddenCards = document.querySelectorAll(".scene.hide");
+        hiddenCards.forEach(el => {
+            el.classList.remove("hide");
+        });
     }
 
     function checkPair(list) {

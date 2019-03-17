@@ -37,19 +37,19 @@ h1 {
   grid-gap: 30px;
   grid-template-columns: 60% 40%;
   grid-template-rows: 20% 50% 30%; }
-  .grid.started .game, .grid.started .score, .grid.started .menu {
+  .grid.started .game, .grid.started .menu, .grid.started .score {
     opacity: 1;
     visibility: visible; }
   .grid.started .game {
     -webkit-animation: bounceIn 1.4s ease-in;
             animation: bounceIn 1.4s ease-in; }
-  .grid.started .score {
+  .grid.started .menu {
     -webkit-animation: bounceIn 1.4s ease-in 0.6s;
             animation: bounceIn 1.4s ease-in 0.6s;
     -webkit-transition-delay: 0.6s;
          -o-transition-delay: 0.6s;
             transition-delay: 0.6s; }
-  .grid.started .menu {
+  .grid.started .score {
     -webkit-animation: bounceIn 1.4s ease-in 0.3s;
             animation: bounceIn 1.4s ease-in 0.3s;
     -webkit-transition-delay: 0.3s;
@@ -61,8 +61,8 @@ header {
   grid-column: 1/3; }
 
 .game,
-.score,
-.menu {
+.menu,
+.score {
   opacity: 0;
   visibility: hidden; }
 
@@ -75,17 +75,51 @@ header {
   padding: 8px;
   border-radius: 8px; }
 
-.menu {
+.score {
   grid-row: 2/3;
   grid-column: 2/3;
   background: #57b463;
   border-radius: 8px; }
 
-.score {
+.menu {
   grid-row: 3/4;
   grid-column: 2/3;
-  background: #a84747;
+  background: #2a9dc1;
   border-radius: 8px; }
+
+.button {
+  border: 1px solid #146580;
+  padding: 0px 65px;
+  margin: 3% 3% 1.5% 3%;
+  height: 83%;
+  width: 94%;
+  color: #fff;
+  font-family: "Pacifico";
+  font-size: 30px;
+  background: #38b4dc;
+  border-radius: 8px;
+  -webkit-transition: all 0.3s ease-in-out;
+  -o-transition: all 0.3s ease-in-out;
+  transition: all 0.3s ease-in-out;
+  position: relative; }
+  .button-container {
+    height: 50%; }
+  .button.git {
+    text-align: right;
+    margin-top: 1.5%;
+    margin-bottom: 3%; }
+  .button svg {
+    left: 45px;
+    position: absolute;
+    top: 50%;
+    -webkit-transform: translateY(-50%);
+        -ms-transform: translateY(-50%);
+            transform: translateY(-50%); }
+  .button:hover {
+    cursor: pointer;
+    background: #42cdfc; }
+  .button:hover, .button:focus {
+    outline: none; }
 
 .scene-container {
   border-radius: 8px;
@@ -163,8 +197,8 @@ header {
 @-webkit-keyframes bounceIn {
   0% {
     opacity: 0;
-    -webkit-transform: scale(0.3) translate3d(0, 0, 0);
-            transform: scale(0.3) translate3d(0, 0, 0); }
+    -webkit-transform: scale(0.6) translate3d(0, 0, 0);
+            transform: scale(0.6) translate3d(0, 0, 0); }
   50% {
     opacity: 0.9;
     -webkit-transform: scale(1.1);
@@ -181,8 +215,8 @@ header {
 @keyframes bounceIn {
   0% {
     opacity: 0;
-    -webkit-transform: scale(0.3) translate3d(0, 0, 0);
-            transform: scale(0.3) translate3d(0, 0, 0); }
+    -webkit-transform: scale(0.6) translate3d(0, 0, 0);
+            transform: scale(0.6) translate3d(0, 0, 0); }
   50% {
     opacity: 0.9;
     -webkit-transform: scale(1.1);
