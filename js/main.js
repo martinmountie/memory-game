@@ -1,15 +1,16 @@
 (function() {
     let testMode = 0;
-
-    //DOM and globals
-    let counter = 0;
+    let timerOff = 1, timer = null;
+    let counter = 0, cardsLeft = 16;
+    //DOM 
     let listOfClickedElements = [];
     let scenes = document.querySelectorAll(".scene");
     let cardsContent = document.querySelectorAll(".scene .back");
+    let score = document.querySelector(".score h3");
     let gameBoard = [];
     let resetButton = document.getElementById("resetButton");
+    
     resetButton.addEventListener("click", resetGame);
-
     getData();
     
     function getData() {
@@ -58,6 +59,7 @@
     //events
     scenes.forEach(el => {
         el.addEventListener("click", function() {
+            if(timerOff) timer = startTimer();
             if (!this.classList.contains("clicked")) {
                 counter++;
                 if (counter > 2) {
@@ -76,6 +78,24 @@
 
 
     //functions
+    function startTimer() {
+        timerOff = 0;
+        let minutes = 0, seconds = 0, value = null;
+        let timerValue = document.querySelector("p.time");
+        let timerInterval = setInterval(function() {
+            if(seconds < 59) seconds++;
+            else {
+                minutes++;
+                seconds = 0;
+            }
+            value = (minutes > 9)? minutes : "0" + minutes;
+            value += ":";
+            value += (seconds > 9) ? seconds : "0" + seconds;
+            timerValue.innerHTML = value;
+        }, 1000);
+        return timerInterval;
+    }
+
     function startGame() {
         let game = document.getElementById("gameGrid");
         game.classList.add("started");
@@ -85,7 +105,12 @@
         clearBoard(listOfClickedElements);
         counter = 0;
         listOfClickedElements = [];
+        cardsLeft = 16;
+        document.querySelector(".game").classList.remove("win");
+        document.querySelector("p.time").innerHTML = "00:00";
         unhideAll();
+        timerOff = 1;
+        score.innerHTML = "0";
         setTimeout(function() {
             getData();
         }, 500);
@@ -111,6 +136,7 @@
             el.classList.remove("clicked");
         });
         list.length = 0;
+        score.innerHTML = parseInt(score.innerHTML) - 1;
         return 1;
     }
     function hideCards(list) {
@@ -119,9 +145,18 @@
             el.classList.remove("clicked");
         });
         list.length = 0;
+        cardsLeft-=2;
+        score.innerHTML = parseInt(score.innerHTML) + 10;
+        if(cardsLeft === 0) {
+            win();
+        }
         return 0;
     }
 
+    function win() {
+        clearInterval(timer);
+        document.querySelector(".game").classList.add("win");
+    }
     //external functions
     function shuffle(a) {
         var j, x, i;
