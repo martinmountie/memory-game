@@ -183,14 +183,17 @@ a.button {
   transition: all 0.3s ease-in-out;
   position: relative;
   &.git {
-    text-align: right;
+    text-align: center;
     margin-top: 1.5%;
     margin-bottom: 3%;
+    justify-content: center;
+    align-items: center;
+    display: flex;
   }
   svg {
-    left: 45px;
-    position: absolute;
-    top: 50%;
+    position: relative;
+    top: 22px;
+    left: -11px;
     transform: translateY(-50%);
   }
   &:hover {
